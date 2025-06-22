@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f4bb.png">
+  <title>Sourav | Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://unpkg.com/@fortawesome/fontawesome-free/js/all.js"></script>
+  <style>
+    *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    min-height: 100vh;
+  }
+    canvas { background: #1f2937; display: block; margin: 0 auto; border: 2px solid #06b6d4; }
+  </style>
+  <style>
+  .nav-link.active, .nav-link:focus {
+    border: 2px solid #06b6d4;
+    background: #164e63;
+    color: #fff !important;
+  }
+</style>
+</head>
+<body class="bg-gray-900 text-white font-sans">
+  <!-- Mobile Navbar Toggle -->
+  <nav class="bg-gray-800 p-4 sticky top-0 z-50">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-xl font-bold"><a href="#profile" class="hover:text-cyan-400 transition">Sourav Pal</a></h1>
+      <button id="menu-btn" class="md:hidden block text-white">
+        <i class="fas fa-bars text-2xl"></i>
+      </button>
+      <ul id="menu" class="md:flex space-x-4 hidden md:static absolute bg-gray-800 w-full md:w-auto left-0 top-16 p-4 md:p-0 flex-col md:flex-row">
+        <li><a href="#about" class="nav-link block py-2 md:py-0 px-3 rounded transition hover:bg-cyan-600 hover:text-white">About</a></li>
+        <li><a href="#skills" class="nav-link block py-2 md:py-0 px-3 rounded transition hover:bg-cyan-600 hover:text-white">Skills</a></li>
+        <li><a href="#projects" class="nav-link block py-2 md:py-0 px-3 rounded transition hover:bg-cyan-600 hover:text-white">Projects</a></li>
+        <li><a href="#contact" class="nav-link block py-2 md:py-0 px-3 rounded transition hover:bg-cyan-600 hover:text-white">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Profile Photo & Name Section -->
+  <section id="profile" class="pt-16 pb-4 flex flex-col items-center md:flex-row md:justify-center md:items-start gap-8">
+    <img src="profile.jpg" alt="Sourav Pal" class="w-64 h-80 rounded-xl border-4 border-cyan-500 shadow-lg object-cover object-top">
+    <div class="text-center md:text-left">
+      <h1 class="text-5xl md:text-6xl font-extrabold mb-2">Sourav</h1>
+      <p class="text-lg text-gray-300 mb-4 max-w-xl">
+        Passionate about web development, I love building interactive, user-friendly apps and learning new technologies every day. Let's create something amazing together!
+      </p>
+    </div>
+  </section>
+
+  <!-- Fun Invite Section -->
+  <section class="pb-4 text-center">
+    <div class="max-w-2xl mx-auto">
+      <p class="text-xl font-semibold text-cyan-400">
+        Getting bored? Try some of my projects below and have fun exploring what I’ve built!
+      </p>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="p-8 md:p-10">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-6">About Me</h2>
+      <p class="text-lg text-left md:text-center">I am Sourav, an aspiring full stack web developer currently learning the MERN stack. Passionate about building interactive and user-friendly web applications. Always eager to learn and grow!</p>
+    </div>
+  </section>
+  <!-- Resume Download -->
+  <section class="p-8 md:p-10">
+    <div class="text-center">
+      <a href="sourav_resume.pdf" download class="inline-block bg-cyan-500 px-6 py-2 rounded text-white font-semibold hover:bg-cyan-600">Download Resume</a>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="p-8 md:p-10 bg-gray-800">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-6">Skills</h2>
+      <ul class="grid grid-cols-2 md:grid-cols-4 gap-4 text-left text-lg">
+        <li><i class='fab fa-html5 text-cyan-400 mr-2'></i>HTML</li>
+        <li><i class='fab fa-css3-alt text-cyan-400 mr-2'></i>CSS</li>
+        <li><i class='fas fa-wind text-cyan-400 mr-2'></i>Tailwind CSS</li>
+        <li><i class='fab fa-js text-cyan-400 mr-2'></i>JavaScript</li>
+        <li><i class='fab fa-react text-cyan-400 mr-2'></i>React (Learning)</li>
+        <li><i class='fab fa-node-js text-cyan-400 mr-2'></i>Node.js (Learning)</li>
+        <li><i class='fas fa-database text-cyan-400 mr-2'></i>MongoDB (Learning)</li>
+        <li><i class='fab fa-github text-cyan-400 mr-2'></i>Git & GitHub</li>
+        
+      </ul>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="p-8 md:p-12">
+  <h2 class="text-4xl font-extrabold text-center mb-8">Projects</h2>
+  <div class="max-w-6xl mx-auto flex flex-col md:flex-row gap-10">
+    <!-- Projects Left -->
+    <div class="flex-1 flex flex-col gap-6">
+      <!-- Breakout Game -->
+      <div class="bg-gray-700 p-4 rounded-lg flex flex-col h-full">
+        <h3 class="text-xl font-semibold mb-2">Breakout Game</h3>
+        <p class="mb-2 text-cyan-300 text-sm">Test your reflexes! Can you beat your best score? Show your skills below!</p>
+        <div class="w-full flex justify-center">
+          <canvas id="breakout" style="max-width:100%;height:auto;" width="700" height="400"></canvas>
+        </div>
+        <p id="breakout-status" class="text-center my-2"></p>
+        <div class="flex justify-center gap-4 mt-auto pt-4">
+          <button onclick="startBreakout()" class="bg-green-500 px-4 py-1 rounded hover:bg-green-600 transition hover:shadow-lg">Start Game</button>
+          <button onclick="resetBreakout()" class="bg-cyan-500 px-4 py-1 rounded hover:bg-cyan-600 transition hover:shadow-lg">Reset Game</button>
+        </div>
+      </div>
+      <!-- Tetris Game -->
+      <div class="bg-gray-700 p-4 rounded-lg flex flex-col h-full">
+        <h3 class="text-xl font-semibold mb-2">Tetris Game</h3>
+        <p class="mb-2 text-cyan-300 text-sm">Stack the blocks and challenge your high score. Show your puzzle skills!</p>
+        <div class="w-full flex justify-center">
+          <canvas id="tetris" style="max-width:100%;height:auto;" width="320" height="480"></canvas>
+        </div>
+        <div id="tetris-mobile-controls" class="flex justify-center gap-2 mt-2 md:hidden" style="display:none;">
+          <button onclick="tetrisMobileControl('left')" class="bg-gray-600 p-2 rounded">◀️</button>
+          <button onclick="tetrisMobileControl('rotate')" class="bg-cyan-500 p-2 rounded">⟳</button>
+          <button onclick="tetrisMobileControl('right')" class="bg-gray-600 p-2 rounded">▶️</button>
+          <button onclick="tetrisMobileControl('down')" class="bg-green-500 p-2 rounded">▼</button>
+          <button onclick="tetrisMobileControl('drop')" class="bg-red-500 p-2 rounded">⏬</button>
+        </div>
+        <div class="flex justify-center gap-4 mt-auto pt-4">
+          <button onclick="startTetris()" class="bg-green-500 px-4 py-1 rounded hover:bg-green-600 transition hover:shadow-lg">Start Tetris</button>
+          <button onclick="resetTetris()" class="bg-cyan-500 px-4 py-1 rounded hover:bg-cyan-600 transition hover:shadow-lg">Reset Tetris</button>
+        </div>
+      </div>
+      <!-- Calculator + To-Do Row -->
+      <div class="flex flex-col md:flex-row gap-6">
+        <!-- Calculator (Left) -->
+        <div class="bg-gray-700 p-6 rounded-lg flex-1 flex flex-col shadow-lg">
+          <h3 class="text-2xl font-bold mb-4 text-center">Calculator</h3>
+          <div class="relative mb-4">
+            <input type="text" id="calc-display" class="w-full mb-2 p-4 rounded bg-gray-900 text-white border-2 border-cyan-500 text-right text-2xl font-mono shadow-inner" disabled>
+            <button onclick="calcBackspace()" class="absolute top-3 right-3 bg-yellow-500 px-4 py-1 rounded hover:bg-yellow-600 transition font-bold text-lg shadow">⌫</button>
+          </div>
+          <div class="grid grid-cols-4 gap-3">
+            <button onclick="calcAppend('7')" class="bg-gray-800 p-3 rounded font-bold text-lg hover:bg-cyan-700 transition">7</button>
+            <button onclick="calcAppend('8')" class="bg-gray-800 p-3 rounded font-bold text-lg hover:bg-cyan-700 transition">8</button>
+            <button onclick="calcAppend('9')" class="bg-gray-800 p-3 rounded font-bold text-lg hover:bg-cyan-700 transition">9</button>
+            <button onclick="calcAppend('/')" class="bg-cyan-500 p-3 rounded font-bold text-lg text-white hover:bg-cyan-600 transition">÷</button>
+            <button onclick="calcAppend('4')" class="bg-gray-800 p-3 rounded font-bold text-lg hover:bg-cyan-700 transition">4</button>
+            <button onclick="calcAppend('5')" class="bg-gray-800 p-3 rounded font-bold text-lg hover:bg-cyan-700 transition">5</button>
+            <button onclick="calcAppend('6')" class="bg-gray-800 p-3 rounded font-bold text-lg hover:bg-cyan-700 transition">6</button>
+            <button onclick="calcAppend('*')" class="bg-cyan-500 p-3 rounded font-bold text-lg text-white hover:bg-cyan-600 transition">×</button>
+            <button onclick="calcAppend('1')" class="bg-gray-800 p-3 rounded font-bold text-lg hover:bg-cyan-700 transition">1</button>
+            <button onclick="calcAppend('2')" class="bg-gray-800 p-3 rounded font-bold text-lg hover:bg-cyan-700 transition">2</button>
+            <button onclick="calcAppend('3')" class="bg-gray-800 p-3 rounded font-bold text-lg hover:bg-cyan-700 transition">3</button>
+            <button onclick="calcAppend('-')" class="bg-cyan-500 p-3 rounded font-bold text-lg text-white hover:bg-cyan-600 transition">−</button>
+            <button onclick="calcAppend('.')" class="bg-gray-800 p-3 rounded font-bold text-lg hover:bg-cyan-700 transition">.</button>
+            <button onclick="calcAppend('0')" class="bg-gray-800 p-3 rounded font-bold text-lg col-span-2 hover:bg-cyan-700 transition">0</button>
+            <button onclick="calcAppend('+')" class="bg-cyan-500 p-3 rounded font-bold text-lg text-white hover:bg-cyan-600 transition">+</button>
+            <button onclick="calcEvaluate()" class="col-span-2 bg-green-500 p-3 rounded font-bold text-lg text-white hover:bg-green-600 transition">=</button>
+            <button onclick="calcClear()" class="col-span-2 bg-red-500 p-3 rounded font-bold text-lg text-white hover:bg-red-600 transition">Clear</button>
+          </div>
+        </div>
+        <!-- To-Do App (Right) -->
+        <div class="bg-gray-700 p-6 rounded-lg flex-1 flex flex-col shadow-lg">
+          <h3 class="text-2xl font-bold mb-4 text-center">To-Do App</h3>
+          <div class="flex mb-2">
+            <input id="todo-input" type="text" placeholder="Add a task..." class="flex-1 p-3 rounded bg-gray-800 text-white border border-gray-600 mr-2 text-lg">
+            <button onclick="addTodo()" class="bg-cyan-500 px-5 py-2 rounded hover:bg-cyan-600 transition hover:shadow-lg font-bold text-lg">Add</button>
+          </div>
+          <button onclick="clearTodoList()" class="bg-red-500 px-5 py-2 rounded hover:bg-red-600 transition mb-2 font-bold text-lg">Clear List</button>
+          <ul id="todo-list" class="mt-2 text-left text-base text-gray-200 flex-1 overflow-y-auto"></ul>
+        </div>
+      </div>
+    </div>
+    <!-- Scoreboard Right -->
+    <div class="w-full md:w-80 bg-gray-800 rounded-lg p-6 h-full self-stretch flex flex-col shadow-lg">
+      <h3 class="text-2xl font-bold text-center mb-4 text-cyan-400">Top 10 Players</h3>
+      <ol id="scoreboard-list" class="space-y-2 flex-1 overflow-y-auto">
+        <!-- JS will fill this -->
+      </ol>
+      <p class="text-xs text-gray-400 text-center mt-4">Scores reset every week</p>
+    </div>
+  </div>
+</section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="bg-gray-800 py-10 px-4 mt-10">
+    <div class="max-w-lg mx-auto bg-gray-900 rounded-xl shadow-lg p-8 flex flex-col items-center">
+      <h2 class="text-3xl font-bold text-cyan-400 mb-2 flex items-center gap-2">
+        <i class="fas fa-envelope"></i> Contact Me
+      </h2>
+      <p class="text-gray-300 mb-6 text-center">Have a question, want to collaborate, or just want to say hi? Fill out the form below and I'll get back to you soon!</p>
+      <form id="contact-form" class="w-full space-y-4">
+        <div class="flex items-center bg-gray-800 rounded px-3">
+          <i class="fas fa-user text-cyan-400 mr-2"></i>
+          <input type="text" name="name" placeholder="Your Name" required class="w-full p-2 bg-transparent text-white border-none focus:ring-0 outline-none">
+        </div>
+        <div class="flex items-center bg-gray-800 rounded px-3">
+          <i class="fas fa-envelope text-cyan-400 mr-2"></i>
+          <input type="email" name="email" placeholder="Your Email" required class="w-full p-2 bg-transparent text-white border-none focus:ring-0 outline-none">
+        </div>
+        <div class="flex items-start bg-gray-800 rounded px-3">
+          <i class="fas fa-comment-dots text-cyan-400 mr-2 mt-2"></i>
+          <textarea name="message" placeholder="Your Message" required rows="4" class="w-full p-2 bg-transparent text-white border-none focus:ring-0 outline-none resize-none"></textarea>
+        </div>
+        <button type="submit" class="w-full bg-cyan-500 py-3 rounded font-bold text-lg hover:bg-cyan-600 transition hover:shadow-lg mt-2 flex items-center justify-center gap-2">
+          <i class="fas fa-paper-plane"></i> Send Message
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-center p-4 mt-10 border-t border-gray-700">
+    <p>&copy; 2025 Sourav Pal. All rights reserved.</p>
+  </footer>
+
+  <button id="back-to-top" class="fixed bottom-6 right-6 bg-cyan-500 text-white p-3 rounded-full shadow-lg hover:bg-cyan-600 hidden z-50">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <script>
+/* --- Smooth Scrolling for Navbar --- */
+document.querySelectorAll('nav a[href^="#"]').forEach(link => {
+  link.addEventListener('click', function(e) {
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      window.scrollTo({
+        top: target.offsetTop - 20,
+        behavior: 'smooth'
+      });
+    }
+  });
+});
+
+/* --- Navbar Toggle --- */
+const btn = document.getElementById('menu-btn');
+const menu = document.getElementById('menu');
+btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+
+/* --- Highlight Active Navbar Link --- */
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', function() {
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+/* --- TODO APP --- */
+function addTodo() {
+  const input = document.getElementById('todo-input');
+  const list = document.getElementById('todo-list');
+  const value = input.value.trim();
+  if (value !== '') {
+    const li = document.createElement('li');
+    li.className = 'bg-gray-800 p-2 mt-1 rounded border border-cyan-600 flex justify-between items-center';
+    const span = document.createElement('span');
+    span.textContent = value;
+    span.className = 'flex-1 cursor-pointer';
+    span.onclick = function() {
+      span.classList.toggle('line-through');
+      span.classList.toggle('text-gray-400');
+    };
+    const delBtn = document.createElement('button');
+    delBtn.textContent = '🗑️';
+    delBtn.className = 'ml-2 text-red-400 hover:text-red-600';
+    delBtn.onclick = function() {
+      li.remove();
+    };
+    li.appendChild(span);
+    li.appendChild(delBtn);
+    list.appendChild(li);
+    input.value = '';
+  }
+}
+function clearTodoList() {
+  document.getElementById('todo-list').innerHTML = '';
+}
+
+/* --- CALCULATOR --- */
+let calcDisplay = document.getElementById('calc-display');
+function calcAppend(value) {
+  calcDisplay.value += value;
+}
+function calcClear() {
+  calcDisplay.value = '';
+}
+function calcBackspace() {
+  calcDisplay.value = calcDisplay.value.slice(0, -1);
+}
+function calcEvaluate() {
+  try {
+    calcDisplay.value = eval(calcDisplay.value);
+  } catch {
+    calcDisplay.value = 'Error';
+  }
+}
+
+/* --- BREAKOUT GAME: Classic Working Version --- */
+let breakoutInterval;
+function startBreakout() {
+  const canvas = document.getElementById("breakout");
+  const ctx = canvas.getContext("2d");
+  let x = canvas.width / 2;
+  let y = canvas.height - 30;
+  let dx = 3;
+  let dy = -3;
+  let ballRadius = 12;
+  let paddleHeight = 14;
+  let paddleWidth = 110;
+  let paddleX = (canvas.width - paddleWidth) / 2;
+  let rightPressed = false;
+  let leftPressed = false;
+
+  // Bricks
+  const brickRowCount = 6;
+  const brickColumnCount = 10;
+  const brickWidth = 55;
+  const brickHeight = 22;
+  const brickPadding = 10;
+  const brickOffsetTop = 40;
+  const brickOffsetLeft = 35;
+  let bricks = [];
+  for(let c=0; c<brickColumnCount; c++) {
+    bricks[c] = [];
+    for(let r=0; r<brickRowCount; r++) {
+      // Randomly set some bricks as missing for a new pattern each game
+      bricks[c][r] = { x: 0, y: 0, status: Math.random() > 0.25 ? 1 : 0 };
+    }
+  }
+  let score = 0;
+
+  function keyDownHandler(e) {
+    if (e.key === "Right" || e.key === "ArrowRight") {
+      rightPressed = true;
+    } else if (e.key === "Left" || e.key === "ArrowLeft") {
+      leftPressed = true;
+    }
+  }
+  function keyUpHandler(e) {
+    if (e.key === "Right" || e.key === "ArrowRight") {
+      rightPressed = false;
+    } else if (e.key === "Left" || e.key === "ArrowLeft") {
+      leftPressed = false;
+    }
+  }
+  function mouseMoveHandler(e) {
+    const relativeX = e.clientX - canvas.getBoundingClientRect().left;
+    if (relativeX > 0 && relativeX < canvas.width) {
+      paddleX = relativeX - paddleWidth / 2;
+    }
+  }
+
+  document.addEventListener("keydown", keyDownHandler);
+  document.addEventListener("keyup", keyUpHandler);
+  canvas.addEventListener("mousemove", mouseMoveHandler);
+
+  function drawBall() {
+    ctx.beginPath();
+    ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+    ctx.fillStyle = "cyan";
+    ctx.fill();
+    ctx.closePath();
+  }
+  function drawPaddle() {
+    ctx.beginPath();
+    ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
+    ctx.fillStyle = "white";
+    ctx.fill();
+    ctx.closePath();
+  }
+  function drawBricks() {
+    for(let c=0; c<brickColumnCount; c++) {
+      for(let r=0; r<brickRowCount; r++) {
+        if(bricks[c][r].status == 1) {
+          let brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
+          let brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
+          bricks[c][r].x = brickX;
+          bricks[c][r].y = brickY;
+          ctx.beginPath();
+          ctx.rect(brickX, brickY, brickWidth, brickHeight);
+          ctx.fillStyle = "#06b6d4";
+          ctx.fill();
+          ctx.closePath();
+        }
+      }
+    }
+  }
+  function collisionDetection() {
+    let bricksLeft = 0;
+    for(let c=0; c<brickColumnCount; c++) {
+      for(let r=0; r<brickRowCount; r++) {
+        let b = bricks[c][r];
+        if(b.status == 1) {
+          bricksLeft++;
+          if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
+            dy = -dy;
+            b.status = 0;
+            score++;
+            // Increase speed each time a brick is broken
+            dx *= 1.03;
+            dy *= 1.03;
+          }
+        }
+      }
+    }
+    if (bricksLeft === 0) {
+      document.getElementById("breakout-status").innerText = "You Win!";
+      clearInterval(breakoutInterval);
+      document.removeEventListener("keydown", keyDownHandler);
+      document.removeEventListener("keyup", keyUpHandler);
+      canvas.removeEventListener("mousemove", mouseMoveHandler);
+    }
+  }
+  function drawScore() {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#fff";
+    ctx.fillText("Score: "+score, 8, 20);
+  }
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawBricks();
+    drawBall();
+    drawPaddle();
+    drawScore();
+    collisionDetection();
+
+    if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
+      dx = -dx;
+    }
+    if (y + dy < ballRadius) {
+      dy = -dy;
+    } else if (y + dy > canvas.height - ballRadius) {
+      if (x > paddleX && x < paddleX + paddleWidth) {
+        dy = -dy;
+      } else {
+        clearInterval(breakoutInterval);
+        document.getElementById("breakout-status").innerText = "Game Over";
+        document.removeEventListener("keydown", keyDownHandler);
+        document.removeEventListener("keyup", keyUpHandler);
+        canvas.removeEventListener("mousemove", mouseMoveHandler);
+        return;
+      }
+    }
+    if (rightPressed && paddleX < canvas.width - paddleWidth) {
+      paddleX += 7;
+    } else if (leftPressed && paddleX > 0) {
+      paddleX -= 7;
+    }
+
+    x += dx;
+    y += dy;
+  }
+  document.getElementById("breakout-status").innerText = "";
+  if (breakoutInterval) clearInterval(breakoutInterval);
+  breakoutInterval = setInterval(draw, 10);
+}
+function resetBreakout() {
+  clearInterval(breakoutInterval);
+  document.getElementById("breakout-status").innerText = "";
+  const canvas = document.getElementById("breakout");
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+/* --- TETRIS GAME: Bigger, Keyboard & Mobile Controls --- */
+const tetrisCols = 12, tetrisRows = 24;
+let tetrisBoard, tetrisPiece, tetrisInterval, tetrisGameOver = false;
+const tetrisShapes = [
+  [[1,1,1,1]], // I
+  [[1,1,1],[0,1,0]], // T
+  [[1,1,0],[0,1,1]], // S
+  [[0,1,1],[1,1,0]], // Z
+  [[1,1],[1,1]], // O
+  [[1,1,1],[1,0,0]], // L
+  [[1,1,1],[0,0,1]]  // J
+];
+function tetrisReset() {
+  tetrisBoard = Array.from({length: tetrisRows}, () => Array(tetrisCols).fill(0));
+  tetrisPiece = null;
+  tetrisGameOver = false;
+  if (tetrisInterval) clearInterval(tetrisInterval);
+  drawTetris();
+}
+function tetrisNewPiece() {
+  const id = Math.floor(Math.random()*tetrisShapes.length);
+  const shape = tetrisShapes[id];
+  tetrisPiece = {
+    shape,
+    row: 0,
+    col: Math.floor((tetrisCols-shape[0].length)/2),
+    id
+  };
+  if (tetrisCollide(tetrisPiece.shape, tetrisPiece.row, tetrisPiece.col)) {
+    tetrisGameOver = true;
+    if (tetrisInterval) clearInterval(tetrisInterval);
+    drawTetris();
+  }
+}
+function tetrisCollide(shape, row, col) {
+  for (let r=0; r<shape.length; r++) {
+    for (let c=0; c<shape[r].length; c++) {
+      if (shape[r][c]) {
+        let nr = row+r, nc = col+c;
+        if (nr<0 || nr>=tetrisRows || nc<0 || nc>=tetrisCols || tetrisBoard[nr][nc]) return true;
+      }
+    }
+  }
+  return false;
+}
+function tetrisMerge() {
+  for (let r=0; r<tetrisPiece.shape.length; r++) {
+    for (let c=0; c<tetrisPiece.shape[r].length; c++) {
+      if (tetrisPiece.shape[r][c]) {
+        tetrisBoard[tetrisPiece.row+r][tetrisPiece.col+c] = tetrisPiece.id+1;
+      }
+    }
+  }
+}
+function tetrisClearLines() {
+  for (let r=tetrisRows-1; r>=0; r--) {
+    if (tetrisBoard[r].every(x=>x)) {
+      tetrisBoard.splice(r,1);
+      tetrisBoard.unshift(Array(tetrisCols).fill(0));
+      r++;
+    }
+  }
+}
+function tetrisRotate(shape) {
+  return shape[0].map((_,i)=>shape.map(row=>row[i]).reverse());
+}
+function tetrisMove(dx, dy) {
+  if (!tetrisPiece || tetrisGameOver) return;
+  let newRow = tetrisPiece.row+dy, newCol = tetrisPiece.col+dx;
+  if (!tetrisCollide(tetrisPiece.shape, newRow, newCol)) {
+    tetrisPiece.row = newRow;
+    tetrisPiece.col = newCol;
+    drawTetris();
+  }
+}
+function tetrisDrop() {
+  if (!tetrisPiece || tetrisGameOver) return;
+  while (!tetrisCollide(tetrisPiece.shape, tetrisPiece.row+1, tetrisPiece.col)) {
+    tetrisPiece.row++;
+  }
+  tetrisStep();
+}
+function tetrisStep() {
+  if (!tetrisPiece || tetrisGameOver) return;
+  if (!tetrisCollide(tetrisPiece.shape, tetrisPiece.row+1, tetrisPiece.col)) {
+    tetrisPiece.row++;
+  } else {
+    tetrisMerge();
+    tetrisClearLines();
+    tetrisNewPiece();
+  }
+  drawTetris();
+}
+function tetrisRotatePiece() {
+  if (!tetrisPiece || tetrisGameOver) return;
+  const rotated = tetrisRotate(tetrisPiece.shape);
+  if (!tetrisCollide(rotated, tetrisPiece.row, tetrisPiece.col)) {
+    tetrisPiece.shape = rotated;
+    drawTetris();
+  }
+}
+function drawTetris() {
+  const canvas = document.getElementById("tetris");
+  // Responsive sizing
+  let parent = canvas.parentElement;
+  let maxWidth = Math.min(parent.offsetWidth, 320);
+  let maxHeight = Math.min(window.innerHeight * 0.6, 480); // 60vh or 480px
+  let blockW = Math.floor(maxWidth / tetrisCols);
+  let blockH = Math.floor(maxHeight / tetrisRows);
+  let block = Math.min(blockW, blockH);
+  let width = block * tetrisCols;
+  let height = block * tetrisRows;
+  canvas.width = width;
+  canvas.height = height;
+
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  // Draw board
+  for (let r=0; r<tetrisRows; r++) {
+    for (let c=0; c<tetrisCols; c++) {
+      if (tetrisBoard[r][c]) {
+        ctx.fillStyle = "#06b6d4";
+        ctx.fillRect(c*block, r*block, block-1, block-1);
+      }
+    }
+  }
+  // Draw piece
+  if (tetrisPiece) {
+    for (let r=0; r<tetrisPiece.shape.length; r++) {
+      for (let c=0; c<tetrisPiece.shape[r].length; c++) {
+        if (tetrisPiece.shape[r][c]) {
+          ctx.fillStyle = "#fff";
+          ctx.fillRect((tetrisPiece.col+c)*block, (tetrisPiece.row+r)*block, block-1, block-1);
+        }
+      }
+    }
+  }
+  if (tetrisGameOver) {
+    ctx.fillStyle = "red";
+    ctx.font = "20px Arial";
+    ctx.fillText("Game Over", 30, 150);
+  }
+}
+function tetrisKeyHandler(e) {
+  if (tetrisGameOver) return;
+  if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") tetrisMove(-1,0);
+  else if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") tetrisMove(1,0);
+  else if (e.key === "ArrowDown" || e.key === "s" || e.key === "S") tetrisStep();
+  else if (e.key === "ArrowUp" || e.key === "w" || e.key === "W") tetrisRotatePiece();
+  else if (e.key === " " || e.key === "Spacebar") tetrisDrop();
+}
+let tetrisKeyListener = null;
+
+function tetrisMobileControl(action) {
+  if (action === "left") tetrisMove(-1,0);
+  else if (action === "right") tetrisMove(1,0);
+  else if (action === "down") tetrisStep();
+  else if (action === "rotate") tetrisRotatePiece();
+  else if (action === "drop") tetrisDrop();
+}
+
+function showTetrisMobileControls(show) {
+  document.getElementById('tetris-mobile-controls').style.display = show ? 'flex' : 'none';
+}
+window.addEventListener('resize', function() {
+  showTetrisMobileControls(window.innerWidth < 768);
+  drawTetris();
+});
+showTetrisMobileControls(window.innerWidth < 768);
+
+function startTetris() {
+  tetrisReset();
+  tetrisNewPiece();
+  drawTetris();
+  if (tetrisInterval) clearInterval(tetrisInterval);
+  tetrisInterval = setInterval(()=>{ if (!tetrisGameOver) tetrisStep(); }, 400);
+  if (tetrisKeyListener) document.removeEventListener("keydown", tetrisKeyListener);
+  tetrisKeyListener = tetrisKeyHandler;
+  document.addEventListener("keydown", tetrisKeyListener);
+}
+function resetTetris() {
+  if (tetrisInterval) clearInterval(tetrisInterval);
+  tetrisReset();
+  if (tetrisKeyListener) document.removeEventListener("keydown", tetrisKeyListener);
+  tetrisKeyListener = null;
+}
+window.tetrisMobileControl = tetrisMobileControl;
+
+/* --- Unified Scoreboard Logic with Dummy Data --- */
+const dummyPlayers = [
+  { name: "Alex", breakout: 120, tetris: 80, rating: 4 },
+  { name: "Priya", breakout: 90, tetris: 110, rating: 5 },
+  { name: "Sam", breakout: 100, tetris: 95, rating: 3 },
+  { name: "Mia", breakout: 85, tetris: 120, rating: 5 },
+  { name: "Liam", breakout: 110, tetris: 70, rating: 4 },
+  { name: "Noah", breakout: 70, tetris: 130, rating: 5 },
+  { name: "Emma", breakout: 95, tetris: 90, rating: 4 },
+  { name: "Olivia", breakout: 80, tetris: 100, rating: 3 },
+  { name: "Ava", breakout: 105, tetris: 85, rating: 4 },
+  { name: "Sophia", breakout: 75, tetris: 105, rating: 5 }
+];
+
+function getUnifiedScores() {
+  let data = JSON.parse(localStorage.getItem('unifiedScores') || 'null');
+  if (!data || !Array.isArray(data) || data.length === 0) {
+    data = [...dummyPlayers];
+    localStorage.setItem('unifiedScores', JSON.stringify(data));
+  }
+  return data;
+}
+
+function saveUnifiedScore(name, breakoutScore, tetrisScore, rating) {
+  let data = getUnifiedScores();
+  let player = data.find(p => p.name === name);
+  if (!player) {
+    player = { name, breakout: 0, tetris: 0, rating: 0 };
+    data.push(player);
+  }
+  if (breakoutScore !== undefined) player.breakout = Math.max(player.breakout, breakoutScore);
+  if (tetrisScore !== undefined) player.tetris = Math.max(player.tetris, tetrisScore);
+  if (rating !== undefined) player.rating = rating;
+  // Remove dummy players if any real player is added
+  data = data.filter(p => !dummyPlayers.some(d => d.name === p.name) || p.name === name);
+  // Sort by total score, descending, then slice top 10
+  data = data.sort((a, b) => (b.breakout + b.tetris) - (a.breakout + a.tetris)).slice(0, 10);
+  localStorage.setItem('unifiedScores', JSON.stringify(data));
+  renderUnifiedScoreboard();
+}
+
+function renderUnifiedScoreboard() {
+  const data = getUnifiedScores();
+  const ol = document.getElementById('scoreboard-list');
+  ol.innerHTML = data.length
+    ? `<li class="flex font-semibold justify-between px-3 py-2 border-b border-cyan-700 text-cyan-300">
+        <span class="w-8">S.No.</span>
+        <span class="flex-1">Player Name</span>
+        <span class="w-20 text-center">Breakout</span>
+        <span class="w-20 text-center">Tetris</span>
+        <span class="w-24 text-center">Rating</span>
+      </li>` +
+      data.map((p, i) =>
+        `<li class="flex justify-between items-center bg-gray-700 rounded px-3 py-2">
+          <span class="w-8">${i + 1}</span>
+          <span class="flex-1 truncate">${p.name}</span>
+          <span class="w-20 text-center">${p.breakout}</span>
+          <span class="w-20 text-center">${p.tetris}</span>
+          <span class="w-24 text-center">${renderStars(p.rating || 0)}</span>
+        </li>`
+      ).join('')
+    : '<li class="text-center text-gray-400">No scores yet. Be the first!</li>';
+}
+
+function renderStars(rating) {
+  let stars = '';
+  for (let i = 1; i <= 5; i++) {
+    stars += `<i class="fa${i <= rating ? 's' : 'r'} fa-star text-yellow-400"></i>`;
+  }
+  return stars;
+}
+
+renderUnifiedScoreboard();
+
+/* --- Back to Top Button --- */
+const backToTopBtn = document.getElementById('back-to-top');
+window.onscroll = function() {
+  if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+    backToTopBtn.classList.remove('hidden');
+  } else {
+    backToTopBtn.classList.add('hidden');
+  }
+};
+backToTopBtn.onclick = function() {
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+  </script>
+</body>
+</html>
