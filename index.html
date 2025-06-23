@@ -101,19 +101,28 @@
   <div class="max-w-6xl mx-auto flex flex-col md:flex-row gap-10">
     <!-- Projects Left -->
     <div class="flex-1 flex flex-col gap-6">
-      <!-- Breakout Game -->
-      <div class="bg-gray-700 p-4 rounded-lg flex flex-col h-full">
-        <h3 class="text-xl font-semibold mb-2">Breakout Game</h3>
-        <p class="mb-2 text-cyan-300 text-sm">Test your reflexes! Can you beat your best score? Show your skills below!</p>
-        <div class="w-full flex justify-center">
-          <canvas id="breakout" style="max-width:100%;height:auto;" width="700" height="400"></canvas>
-        </div>
-        <p id="breakout-status" class="text-center my-2"></p>
-        <div class="flex justify-center gap-4 mt-auto pt-4">
-          <button onclick="startBreakout()" class="bg-green-500 px-4 py-1 rounded hover:bg-green-600 transition hover:shadow-lg">Start Game</button>
-          <button onclick="resetBreakout()" class="bg-cyan-500 px-4 py-1 rounded hover:bg-cyan-600 transition hover:shadow-lg">Reset Game</button>
-        </div>
-      </div>
+<!-- BREAKOUT GAME SECTION -->
+<div class="bg-gray-700 p-4 rounded-lg flex flex-col h-full">
+  <h3 class="text-xl font-semibold mb-2">Breakout Game</h3>
+  <p class="mb-2 text-cyan-300 text-sm">Test your reflexes! Can you beat your best score? Show your skills below!</p>
+
+  <div class="w-full flex justify-center">
+    <canvas id="breakout" style="max-width:100%;height:auto;touch-action:none;" width="700" height="400"></canvas>
+  </div>
+
+  <div class="text-center my-2 text-yellow-400 font-semibold" id="breakout-status"></div>
+  <div class="text-center text-sm font-semibold my-1 flex justify-center gap-4 flex-wrap">
+    <span class="text-pink-400" id="booster-status-left"></span>
+    <span class="text-green-400" id="booster-status-center"></span>
+    <span class="text-blue-400" id="booster-status-right"></span>
+  </div>
+
+  <div class="flex justify-center gap-4 mt-auto pt-4">
+    <button onclick="startBreakout()" class="bg-green-500 px-4 py-1 rounded hover:bg-green-600 transition hover:shadow-lg">Start Game</button>
+    <button onclick="resetBreakout()" class="bg-cyan-500 px-4 py-1 rounded hover:bg-cyan-600 transition hover:shadow-lg">Reset Game</button>
+  </div>
+</div>
+
       <!-- Tetris Game -->
       <div class="bg-gray-700 p-4 rounded-lg flex flex-col h-full">
         <h3 class="text-xl font-semibold mb-2">Tetris Game</h3>
@@ -139,8 +148,8 @@
         <div class="bg-gray-700 p-6 rounded-lg flex-1 flex flex-col shadow-lg">
           <h3 class="text-2xl font-bold mb-4 text-center">Calculator</h3>
           <div class="relative mb-4">
-            <input type="text" id="calc-display" class="w-full mb-2 p-4 rounded bg-gray-900 text-white border-2 border-cyan-500 text-right text-2xl font-mono shadow-inner" disabled>
-            <button onclick="calcBackspace()" class="absolute top-3 right-3 bg-yellow-500 px-4 py-1 rounded hover:bg-yellow-600 transition font-bold text-lg shadow">⌫</button>
+            <input type="text" id="calc-display" class="w-full pr-16 mb-2 p-4 rounded bg-gray-900 text-white border-2 border-cyan-500 text-right text-2xl font-mono shadow-inner" disabled>
+            <button onclick="calcBackspace()" class="absolute top-3 right-3 bg-yellow-500 px-3 py-1 rounded hover:bg-yellow-600 transition font-bold text-lg shadow">⌫</button>
           </div>
           <div class="grid grid-cols-4 gap-3">
             <button onclick="calcAppend('7')" class="bg-gray-800 p-3 rounded font-bold text-lg hover:bg-cyan-700 transition">7</button>
@@ -175,7 +184,8 @@
       </div>
     </div>
     <!-- Scoreboard Right -->
-    <div class="w-full md:w-80 bg-gray-800 rounded-lg p-6 h-full self-stretch flex flex-col shadow-lg">
+    <div class="w-full md:w-[440px] bg-gray-800 rounded-lg p-6 h-full self-stretch flex flex-col shadow-lg">
+
       <h3 class="text-2xl font-bold text-center mb-4 text-cyan-400">Top 10 Players</h3>
       <ol id="scoreboard-list" class="space-y-2 flex-1 overflow-y-auto">
         <!-- JS will fill this -->
@@ -299,23 +309,28 @@ function calcEvaluate() {
   }
 }
 
-/* --- BREAKOUT GAME: Classic Working Version --- */
+/* --- breakout game --- */
 let breakoutInterval;
+let allBalls = [];
+let bricks = [];
+let slowdownTimer = null;
+let scoreBoostTimer = null;
+let slowdownActive = false;
+
 function startBreakout() {
   const canvas = document.getElementById("breakout");
   const ctx = canvas.getContext("2d");
-  let x = canvas.width / 2;
-  let y = canvas.height - 30;
-  let dx = 3;
-  let dy = -3;
-  let ballRadius = 12;
-  let paddleHeight = 14;
   let paddleWidth = 110;
+  let paddleHeight = 14;
   let paddleX = (canvas.width - paddleWidth) / 2;
+
   let rightPressed = false;
   let leftPressed = false;
+  let score = 0;
+  let totalHits = 0;
 
-  // Bricks
+  const ballRadius = 12;
+
   const brickRowCount = 6;
   const brickColumnCount = 10;
   const brickWidth = 55;
@@ -323,48 +338,73 @@ function startBreakout() {
   const brickPadding = 10;
   const brickOffsetTop = 40;
   const brickOffsetLeft = 35;
-  let bricks = [];
-  for(let c=0; c<brickColumnCount; c++) {
-    bricks[c] = [];
-    for(let r=0; r<brickRowCount; r++) {
-      // Randomly set some bricks as missing for a new pattern each game
-      bricks[c][r] = { x: 0, y: 0, status: Math.random() > 0.25 ? 1 : 0 };
-    }
-  }
-  let score = 0;
 
-  function keyDownHandler(e) {
-    if (e.key === "Right" || e.key === "ArrowRight") {
-      rightPressed = true;
-    } else if (e.key === "Left" || e.key === "ArrowLeft") {
-      leftPressed = true;
+  const boosterLeft = document.getElementById("booster-status-left");
+  const boosterCenter = document.getElementById("booster-status-center");
+  const boosterRight = document.getElementById("booster-status-right");
+
+  bricks = [];
+  for (let c = 0; c < brickColumnCount; c++) {
+    bricks[c] = [];
+    for (let r = 0; r < brickRowCount; r++) {
+      const types = ["multi", "slow", "boost"];
+      const rand = Math.random();
+      let type = "normal";
+      if (rand < 0.2) type = types[Math.floor(Math.random() * types.length)];
+      bricks[c][r] = { x: 0, y: 0, status: Math.random() < 0.8 ? 1 : 0, type };
     }
   }
-  function keyUpHandler(e) {
-    if (e.key === "Right" || e.key === "ArrowRight") {
-      rightPressed = false;
-    } else if (e.key === "Left" || e.key === "ArrowLeft") {
-      leftPressed = false;
-    }
-  }
-  function mouseMoveHandler(e) {
-    const relativeX = e.clientX - canvas.getBoundingClientRect().left;
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") rightPressed = true;
+    else if (e.key === "ArrowLeft") leftPressed = true;
+  });
+  document.addEventListener("keyup", (e) => {
+    if (e.key === "ArrowRight") rightPressed = false;
+    else if (e.key === "ArrowLeft") leftPressed = false;
+  });
+  canvas.addEventListener("mousemove", (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const relativeX = e.clientX - rect.left;
     if (relativeX > 0 && relativeX < canvas.width) {
       paddleX = relativeX - paddleWidth / 2;
     }
+  });
+  canvas.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+  }, { passive: false });
+
+  canvas.addEventListener("touchmove", (e) => {
+    e.preventDefault();
+    const rect = canvas.getBoundingClientRect();
+    const touchX = e.touches[0].clientX - rect.left;
+    const newPaddleX = touchX - paddleWidth / 2;
+    paddleX = Math.max(0, Math.min(canvas.width - paddleWidth, newPaddleX));
+  }, { passive: false });
+
+  function addBall(x, y, dx = 3, dy = -3, color = "cyan") {
+    allBalls.push({ x, y, dx, dy, color });
   }
 
-  document.addEventListener("keydown", keyDownHandler);
-  document.addEventListener("keyup", keyUpHandler);
-  canvas.addEventListener("mousemove", mouseMoveHandler);
-
-  function drawBall() {
-    ctx.beginPath();
-    ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
-    ctx.fillStyle = "cyan";
-    ctx.fill();
-    ctx.closePath();
+  function drawBricks() {
+    for (let c = 0; c < brickColumnCount; c++) {
+      for (let r = 0; r < brickRowCount; r++) {
+        const b = bricks[c][r];
+        if (b.status === 1) {
+          const brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
+          const brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
+          b.x = brickX;
+          b.y = brickY;
+          ctx.beginPath();
+          ctx.rect(brickX, brickY, brickWidth, brickHeight);
+          ctx.fillStyle = b.type === "multi" ? "red" : b.type === "slow" ? "blue" : b.type === "boost" ? "green" : "#06b6d4";
+          ctx.fill();
+          ctx.closePath();
+        }
+      }
+    }
   }
+
   function drawPaddle() {
     ctx.beginPath();
     ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
@@ -372,100 +412,170 @@ function startBreakout() {
     ctx.fill();
     ctx.closePath();
   }
-  function drawBricks() {
-    for(let c=0; c<brickColumnCount; c++) {
-      for(let r=0; r<brickRowCount; r++) {
-        if(bricks[c][r].status == 1) {
-          let brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
-          let brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
-          bricks[c][r].x = brickX;
-          bricks[c][r].y = brickY;
-          ctx.beginPath();
-          ctx.rect(brickX, brickY, brickWidth, brickHeight);
-          ctx.fillStyle = "#06b6d4";
-          ctx.fill();
-          ctx.closePath();
-        }
+
+  function drawBall(ball) {
+    ctx.beginPath();
+    ctx.arc(ball.x, ball.y, ballRadius, 0, Math.PI * 2);
+    ctx.fillStyle = ball.color;
+    ctx.fill();
+    ctx.closePath();
+  }
+
+  function drawScore() {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#fff";
+    ctx.fillText("Score: " + score, 8, 20);
+  }
+
+  function activateBooster(type) {
+    if (type === "multi") {
+      boosterLeft.textContent = "Multiball Activated!";
+      const origin = allBalls[0];
+      for (let i = 0; i < 2; i++) {
+        addBall(origin.x, origin.y, (Math.random() - 0.5) * 6, -3, "orange");
       }
+    } else if (type === "slow") {
+      if (!slowdownActive) {
+        allBalls.forEach((b) => {
+          b.dx *= 0.5;
+          b.dy *= 0.5;
+        });
+        slowdownActive = true;
+      }
+      if (slowdownTimer) clearInterval(slowdownTimer);
+      let time = 10;
+      boosterRight.textContent = `Slowdown: ${time}s`;
+      slowdownTimer = setInterval(() => {
+        time--;
+        boosterRight.textContent = `Slowdown: ${time}s`;
+        if (time <= 0) {
+          clearInterval(slowdownTimer);
+          boosterRight.textContent = "";
+          allBalls.forEach((b) => {
+            if (slowdownActive) {
+              b.dx *= 2;
+              b.dy *= 2;
+            }
+          });
+          slowdownActive = false;
+        }
+      }, 1000);
+    } else if (type === "boost") {
+      if (scoreBoostTimer) clearInterval(scoreBoostTimer);
+      let time = 10;
+      boosterCenter.textContent = `Score Boost: ${time}s`;
+      scoreBoostTimer = setInterval(() => {
+        time--;
+        boosterCenter.textContent = `Score Boost: ${time}s`;
+        if (time <= 0) {
+          clearInterval(scoreBoostTimer);
+          boosterCenter.textContent = "";
+        }
+      }, 1000);
     }
   }
+
   function collisionDetection() {
     let bricksLeft = 0;
-    for(let c=0; c<brickColumnCount; c++) {
-      for(let r=0; r<brickRowCount; r++) {
-        let b = bricks[c][r];
-        if(b.status == 1) {
+    for (let c = 0; c < brickColumnCount; c++) {
+      for (let r = 0; r < brickRowCount; r++) {
+        const b = bricks[c][r];
+        if (b.status === 1) {
           bricksLeft++;
-          if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
-            dy = -dy;
-            b.status = 0;
-            score++;
-            // Increase speed each time a brick is broken
-            dx *= 1.03;
-            dy *= 1.03;
+          for (let ball of allBalls) {
+            if (
+              ball.x > b.x &&
+              ball.x < b.x + brickWidth &&
+              ball.y > b.y &&
+              ball.y < b.y + brickHeight
+            ) {
+              b.status = 0;
+              totalHits++;
+              score += boosterCenter.textContent ? 2 : 1;
+              activateBooster(b.type);
+              ball.dy = -ball.dy;
+              if (totalHits % 5 === 0) {
+                allBalls.forEach((b) => {
+                  b.dx *= 1.05;
+                  b.dy *= 1.05;
+                });
+              }
+              break;
+            }
           }
         }
       }
     }
     if (bricksLeft === 0) {
-      document.getElementById("breakout-status").innerText = "You Win!";
+      document.getElementById("breakout-status").innerText = "🎉 You Win!";
       clearInterval(breakoutInterval);
-      document.removeEventListener("keydown", keyDownHandler);
-      document.removeEventListener("keyup", keyUpHandler);
-      canvas.removeEventListener("mousemove", mouseMoveHandler);
     }
   }
-  function drawScore() {
-    ctx.font = "16px Arial";
-    ctx.fillStyle = "#fff";
-    ctx.fillText("Score: "+score, 8, 20);
-  }
+
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBricks();
-    drawBall();
     drawPaddle();
     drawScore();
+
+    const lostBallIndices = [];
+
+    allBalls.forEach((ball, index) => {
+      drawBall(ball);
+
+      if (ball.x + ball.dx > canvas.width - ballRadius || ball.x + ball.dx < ballRadius) {
+        ball.dx = -ball.dx;
+      }
+
+      if (ball.y + ball.dy < ballRadius) {
+        ball.dy = -ball.dy;
+      } else if (ball.y + ball.dy > canvas.height - ballRadius) {
+        if (ball.x > paddleX && ball.x < paddleX + paddleWidth) {
+          ball.dy = -ball.dy;
+        } else {
+          lostBallIndices.push(index);
+        }
+      }
+
+      ball.x += ball.dx;
+      ball.y += ball.dy;
+    });
+
+    for (let i = lostBallIndices.length - 1; i >= 0; i--) {
+      allBalls.splice(lostBallIndices[i], 1);
+    }
+
     collisionDetection();
 
-    if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
-      dx = -dx;
-    }
-    if (y + dy < ballRadius) {
-      dy = -dy;
-    } else if (y + dy > canvas.height - ballRadius) {
-      if (x > paddleX && x < paddleX + paddleWidth) {
-        dy = -dy;
-      } else {
-        clearInterval(breakoutInterval);
-        document.getElementById("breakout-status").innerText = "Game Over";
-        document.removeEventListener("keydown", keyDownHandler);
-        document.removeEventListener("keyup", keyUpHandler);
-        canvas.removeEventListener("mousemove", mouseMoveHandler);
-        return;
-      }
-    }
     if (rightPressed && paddleX < canvas.width - paddleWidth) {
       paddleX += 7;
     } else if (leftPressed && paddleX > 0) {
       paddleX -= 7;
     }
 
-    x += dx;
-    y += dy;
+    if (allBalls.length === 0) {
+      document.getElementById("breakout-status").innerText = "Game Over";
+      clearInterval(breakoutInterval);
+    }
   }
+
   document.getElementById("breakout-status").innerText = "";
+  addBall(canvas.width / 2, canvas.height - 30);
   if (breakoutInterval) clearInterval(breakoutInterval);
   breakoutInterval = setInterval(draw, 10);
 }
+
 function resetBreakout() {
   clearInterval(breakoutInterval);
   document.getElementById("breakout-status").innerText = "";
   const canvas = document.getElementById("breakout");
   const ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  allBalls = [];
+  document.getElementById("booster-status-left").textContent = "";
+  document.getElementById("booster-status-center").textContent = "";
+  document.getElementById("booster-status-right").textContent = "";
 }
-
 /* --- TETRIS GAME: Bigger, Keyboard & Mobile Controls --- */
 const tetrisCols = 12, tetrisRows = 24;
 let tetrisBoard, tetrisPiece, tetrisInterval, tetrisGameOver = false;
