@@ -183,16 +183,22 @@
         </div>
       </div>
     </div>
-    <!-- Scoreboard Right -->
-    <div class="w-full md:w-[440px] bg-gray-800 rounded-lg p-6 h-full self-stretch flex flex-col shadow-lg">
+  <!-- Scoreboard Right -->
+<!-- Scoreboard Right -->
+<div class="w-full md:w-[440px] bg-gray-800 rounded-lg p-6 h-full self-stretch flex flex-col shadow-lg">
+  <h3 class="text-2xl font-bold text-center mb-4 text-cyan-400">Top 10 Players</h3>
 
-      <h3 class="text-2xl font-bold text-center mb-4 text-cyan-400">Top 10 Players</h3>
-      <ol id="scoreboard-list" class="space-y-2 flex-1 overflow-y-auto">
-        <!-- JS will fill this -->
-      </ol>
-      <p class="text-xs text-gray-400 text-center mt-4">Scores reset every week</p>
-    </div>
+  <!-- Scrollable Container for horizontal overflow -->
+  <div class="overflow-x-auto">
+    <ol id="scoreboard-list" class="min-w-[500px] space-y-2 flex-1 overflow-y-auto whitespace-nowrap text-sm">
+      <!-- JS will dynamically fill this -->
+    </ol>
   </div>
+
+  <p class="text-xs text-gray-400 text-center mt-4">Scores reset every week</p>
+</div>
+
+
 </section>
 
   <!-- Contact Section -->
@@ -286,9 +292,22 @@ function addTodo() {
     input.value = '';
   }
 }
+
 function clearTodoList() {
   document.getElementById('todo-list').innerHTML = '';
 }
+
+// Ensure the Add button doesn't overflow in mobile
+window.addEventListener('DOMContentLoaded', () => {
+  const todoInput = document.getElementById('todo-input');
+  const addButton = document.querySelector("button[onclick='addTodo()']");
+  if (todoInput && addButton) {
+    todoInput.classList.add('min-w-0');
+    addButton.classList.add('whitespace-nowrap');
+    addButton.classList.add('px-3');
+    addButton.classList.remove('px-5');
+  }
+});
 
 /* --- CALCULATOR --- */
 let calcDisplay = document.getElementById('calc-display');
@@ -378,8 +397,13 @@ function startBreakout() {
     e.preventDefault();
     const rect = canvas.getBoundingClientRect();
     const touchX = e.touches[0].clientX - rect.left;
-    const newPaddleX = touchX - paddleWidth / 2;
-    paddleX = Math.max(0, Math.min(canvas.width - paddleWidth, newPaddleX));
+    const scaleX = canvas.width / rect.width;
+    const actualTouchX = touchX * scaleX;
+
+    let newPaddleX = actualTouchX - paddleWidth / 2;
+    if (newPaddleX < 0) newPaddleX = 0;
+    if (newPaddleX > canvas.width - paddleWidth) newPaddleX = canvas.width - paddleWidth;
+    paddleX = newPaddleX;
   }, { passive: false });
 
   function addBall(x, y, dx = 3, dy = -3, color = "cyan") {
@@ -809,24 +833,26 @@ function renderUnifiedScoreboard() {
   const data = getUnifiedScores();
   const ol = document.getElementById('scoreboard-list');
   ol.innerHTML = data.length
-    ? `<li class="flex font-semibold justify-between px-3 py-2 border-b border-cyan-700 text-cyan-300">
-        <span class="w-8">S.No.</span>
-        <span class="flex-1">Player Name</span>
-        <span class="w-20 text-center">Breakout</span>
-        <span class="w-20 text-center">Tetris</span>
+    ? `<li class="flex font-semibold justify-between px-3 py-2 border-b border-cyan-700 text-cyan-300 text-center">
+        <span class="w-8 text-left">S.No.</span>
+        <span class="flex-1 text-left">Player Name</span>
+        <span class="w-20">Breakout</span>
+        <span class="w-20">Tetris</span>
         <span class="w-24 text-center">Rating</span>
       </li>` +
       data.map((p, i) =>
-        `<li class="flex justify-between items-center bg-gray-700 rounded px-3 py-2">
-          <span class="w-8">${i + 1}</span>
-          <span class="flex-1 truncate">${p.name}</span>
-          <span class="w-20 text-center">${p.breakout}</span>
-          <span class="w-20 text-center">${p.tetris}</span>
+        `<li class="flex justify-between items-center bg-gray-700 rounded px-3 py-2 text-center">
+          <span class="w-8 text-left">${i + 1}</span>
+          <span class="flex-1 text-left truncate">${p.name}</span>
+          <span class="w-20">${p.breakout}</span>
+          <span class="w-20">${p.tetris}</span>
           <span class="w-24 text-center">${renderStars(p.rating || 0)}</span>
         </li>`
       ).join('')
     : '<li class="text-center text-gray-400">No scores yet. Be the first!</li>';
 }
+
+
 
 function renderStars(rating) {
   let stars = '';
@@ -837,6 +863,23 @@ function renderStars(rating) {
 }
 
 renderUnifiedScoreboard();
+
+window.addEventListener('DOMContentLoaded', () => {
+  const scoreboardList = document.getElementById('scoreboard-list');
+
+  if (scoreboardList) {
+    const observer = new MutationObserver(() => {
+      scoreboardList.querySelectorAll('li').forEach((li) => {
+        li.classList.add('flex-wrap');
+        li.querySelectorAll('span').forEach((span) => {
+          span.classList.add('break-words');
+        });
+      });
+    });
+    observer.observe(scoreboardList, { childList: true, subtree: true });
+  }
+});
+
 
 /* --- Back to Top Button --- */
 const backToTopBtn = document.getElementById('back-to-top');
